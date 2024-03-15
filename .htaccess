@@ -1,0 +1,10 @@
+AuthType Basic
+AuthName "Geschützter Bereich"
+AuthUserFile ../htpasswd/.htpasswd
+Require valid-user
+<Files "manage_users.php">
+    Require all granted
+</Files>
+<Files "logout.php">
+    Require all granted
+</Files>
