@@ -39,7 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-function addUser($username, $password, $htpasswdPath) {
+function addUser($username, $password, $htpasswdPath)
+{
     if (userExists($username, $htpasswdPath)) {
         return false;
     }
@@ -50,7 +51,8 @@ function addUser($username, $password, $htpasswdPath) {
     return true;
 }
 
-function deleteUser($username, $htpasswdPath) {
+function deleteUser($username, $htpasswdPath)
+{
     $contents = file_get_contents($htpasswdPath);
     $lines = explode("\n", $contents);
     $newContents = "";
@@ -72,7 +74,8 @@ function deleteUser($username, $htpasswdPath) {
     }
 }
 
-function changePassword($username, $newPassword, $htpasswdPath) {
+function changePassword($username, $newPassword, $htpasswdPath)
+{
     if (!userExists($username, $htpasswdPath)) {
         return false;
     }
@@ -93,7 +96,8 @@ function changePassword($username, $newPassword, $htpasswdPath) {
     return true;
 }
 
-function userExists($username, $htpasswdPath) {
+function userExists($username, $htpasswdPath)
+{
     $contents = file_get_contents($htpasswdPath);
     $lines = explode("\n", $contents);
 
@@ -118,10 +122,6 @@ $users = file($htpasswdPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 <head>
     <meta charset="UTF-8">
     <title>Benutzerverwaltung</title>
-</head>
-<body>
-    <meta charset="UTF-8">
-    <title>Benutzerverwaltung</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -130,30 +130,37 @@ $users = file($htpasswdPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             padding: 20px;
             color: #333;
         }
+
         h2 {
             color: #444;
         }
+
         table {
             border-collapse: collapse;
             width: 100%;
             background-color: #fff;
             margin-top: 20px;
         }
+
         th, td {
             text-align: left;
             padding: 8px;
             border-bottom: 1px solid #ddd;
         }
+
         th {
             background-color: #4CAF50;
             color: white;
         }
+
         tr:hover {
             background-color: #f5f5f5;
         }
+
         form {
             margin: 0;
         }
+
         input[type="text"], input[type="password"] {
             padding: 10px;
             margin: 5px 0;
@@ -161,6 +168,7 @@ $users = file($htpasswdPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             border-radius: 4px;
             box-sizing: border-box;
         }
+
         input[type="submit"] {
             background-color: #4CAF50;
             color: white;
@@ -170,13 +178,16 @@ $users = file($htpasswdPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             border-radius: 4px;
             cursor: pointer;
         }
+
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
         .form-inline {
             display: flex;
             align-items: center;
         }
+
         .form-inline input[type="password"] {
             margin-left: 10px;
             margin-right: 5px;
@@ -184,11 +195,10 @@ $users = file($htpasswdPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     </style>
 </head>
 <body>
-
 <h2>Benutzer hinzufügen</h2>
 <form method="post">
-    <input type="text" id="username" name="username" placeholder="Benutzername" required>
-    <input type="password" id="password" name="password" placeholder="Passwort" required>
+    <label for="username"></label><input type="text" id="username" name="username" placeholder="Benutzername" required>
+    <label for="password"></label><input type="password" id="password" name="password" placeholder="Passwort" required>
     <input type="submit" name="addUser" value="Benutzer hinzufügen">
 </form>
 
@@ -197,26 +207,26 @@ $users = file($htpasswdPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     <tr>
         <th>Benutzername</th>
         <th>Passwort ändern</th>
-		<th>Löschen</th>
+        <th>Löschen</th>
     </tr>
     <?php foreach ($users as $user): ?>
-    <?php list($username,) = explode(':', $user, 2); ?>
+        <?php list($username,) = explode(':', $user, 2); ?>
         <tr>
             <td><?= htmlspecialchars($username) ?></td>
             <td class="form-inline">
 
                 <form method="post" style="display: inline;">
                     <input type="hidden" name="username" value="<?= htmlspecialchars($username) ?>">
-                    <input type="password" name="newPassword" required placeholder="Neues Passwort">
+                    <label><input type="password" name="newPassword" required placeholder="Neues Passwort"></label>
                     <input type="submit" name="changePassword" value="Passwort ändern">
                 </form>
             </td>
-			<td>
+            <td>
                 <form method="post" style="display: inline;">
                     <input type="hidden" name="username" value="<?= htmlspecialchars($username) ?>">
                     <input type="submit" name="deleteUser" value="Löschen">
                 </form>
-			</td>
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>
