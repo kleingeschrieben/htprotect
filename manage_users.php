@@ -1,8 +1,7 @@
 <?php
-require_once 'config.php'; // Lade die Konfigurationsdaten
+require_once 'config.php';
 
-$message = ''; // Nachricht für den Benutzer
-
+$message = '';
 if (!isset($_SERVER['PHP_AUTH_USER'])) {
     header('WWW-Authenticate: Basic realm="Admin Bereich"');
     header('HTTP/1.0 401 Unauthorized');
@@ -16,7 +15,14 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
     }
 }
 
-$htpasswdPath = '../htpasswd/.htpasswd'; // Stelle sicher, dass dieser Pfad korrekt ist
+$htpasswdPath = '../htpasswd/.htpasswd';
+$htpasswdDir = dirname($htpasswdPath);
+if (!is_dir($htpasswdDir)) {
+    mkdir($htpasswdDir, 0755, true);
+}
+if (!file_exists($htpasswdPath)) {
+    file_put_contents($htpasswdPath, '');
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['addUser']) && !empty($_POST['username']) && !empty($_POST['password'])) {
@@ -29,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = changePassword($_POST['username'], $_POST['newPassword'], $htpasswdPath);
         $message = $result ? "Passwort von {$_POST['username']} geändert." : "Fehler beim Ändern des Passworts von {$_POST['username']}.";
     }
-    // Lade die Seite neu, um die aktualisierte Benutzerliste anzuzeigen
     header("Location: " . $_SERVER['PHP_SELF'] . "?message=" . urlencode($message));
     exit;
 }
@@ -113,7 +118,6 @@ $users = file($htpasswdPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 <head>
     <meta charset="UTF-8">
     <title>Benutzerverwaltung</title>
-    <!-- Styles sind unverändert und wurden hier ausgelassen für Kürze. Füge die CSS-Styles von vorher hier ein. -->
 </head>
 <body>
     <meta charset="UTF-8">

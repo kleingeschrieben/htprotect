@@ -1,14 +1,13 @@
 <?php
 $htpasswdPath = '../htpasswd/.htpasswd';
 
-$message = ""; // Nachricht für den Benutzer
+$message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $currentUsername = $_SERVER['PHP_AUTH_USER'];
     $newPassword = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
 
-    // Überprüfe, ob die Felder nicht leer sind und die Passwörter übereinstimmen
     if (empty($newPassword) || empty($confirmPassword)) {
         $message = "Bitte fülle alle Felder aus.";
     } elseif ($newPassword !== $confirmPassword) {
