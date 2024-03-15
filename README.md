@@ -1,6 +1,6 @@
 # Benutzerverwaltungsanwendung
 
-Diese Benutzerverwaltungsanwendung ermöglicht es, Benutzerzugänge zu bestimmten Bereichen einer Website sicher zu verwalten. Sie basiert auf der Verwendung von .htaccess und .htpasswd für die Authentifizierung und bietet eine Web-basierte Oberfläche für die Verwaltung von Benutzerkonten. Diese Lösung ist ideal für kleine Projekte oder als Einstiegspunkt in sicherheitsbewusste Webentwicklungen.
+Diese Benutzerverwaltungsanwendung ermöglicht es, Benutzerzugänge zu bestimmten Bereichen einer Website sicher zu verwalten. Sie basiert auf der Verwendung von .htaccess und .htpasswd für die Authentifizierung und bietet eine webbasierte Oberfläche für die Verwaltung von Benutzerkonten. Diese Lösung ist ideal für kleine Projekte oder als Einstiegspunkt in sicherheitsbewusste Webentwicklungen.
 
 ## Funktionen
 
@@ -16,21 +16,26 @@ Diese Benutzerverwaltungsanwendung ermöglicht es, Benutzerzugänge zu bestimmte
 
 ## Installation und Konfiguration
 
-### Konfigurationsdatei einrichten
+### Konfigurationsdatei bearbeiten
 
-Um die Anwendung korrekt zu konfigurieren:
+Die `config.php` existiert bereits im Projektverzeichnis mit voreingestellten Anmeldeinformationen:
 
-1. Erstellen Sie eine Datei namens `config.php` in Ihrem Projektverzeichnis.
-2. Fügen Sie folgenden Inhalt in Ihre `config.php` ein:
+- Benutzername: `admin`
+- Passwort: `admin`
+
+Um die Anwendung mit Ihren eigenen Anmeldeinformationen zu konfigurieren:
+
+1. Öffnen Sie `config.php` in einem Texteditor Ihrer Wahl.
+2. Ändern Sie die Werte für `ADMIN_USER` und `ADMIN_PASSWORD` entsprechend.
 
     ```php
     <?php
     // Konfigurationsdaten
-    define('ADMIN_USER', 'admin'); // Ersetzen Sie 'admin' durch Ihren gewünschten Admin-Benutzernamen
-    define('ADMIN_PASSWORD', 'passwort'); // Ersetzen Sie 'passwort' durch Ihr gewünschtes Admin-Passwort
+    define('ADMIN_USER', 'IhrBenutzername'); // Ersetzen Sie 'IhrBenutzername'
+    define('ADMIN_PASSWORD', 'IhrPasswort'); // Ersetzen Sie 'IhrPasswort'
     ```
 
-3. Passen Sie die Werte für `ADMIN_USER` und `ADMIN_PASSWORD` entsprechend an.
+3. Speichern Sie die Änderungen.
 
 ### Apache und .htaccess konfigurieren
 
